@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Curiosity</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&display=swap');
+      * {
+        outline:none;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Lexend', sans-serif;
+        overflow-y:scroll;
+      }
+      
+      main {
+        width: 852px;
+        margin: 0 auto;
+        padding-top: 72px;
+        padding-bottom: 240px;
+      }
+
+      
+      h1 {
+        font-weight:700;
+        font-size: 44px;
+        margin-bottom:40px;
+      }
+      
+      h2 {
+        font-weight: 300;
+        color: grey;
+        font-size: 32px;
+        margin-top: -32px;
+        margin-bottom: 32px;
+        
+      }
+      
+      h3 {
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 12px;
+        line-height: 1.2;
+      }
+      
+      summary {
+        max-width: 70ch;
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-top: 96px;
+        margin-bottom: 64px;
+      }
+      
+      p {
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 1.8;
+        margin-bottom: 32px;
+        max-width: 70ch;
+      }
+      
+      blockquote {
+        font-size: 32px;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 40px;
+        margin-top: 20px;
+        color: grey;
+      }
+      
+      blockquote::before {
+        content: '\201C';
+        font-size: 44px;        
+      }
+
+      blockquote::after {
+        content: '\201D';
+        font-size: 44px;
+      }
+      
+      a {
+        cursor: pointer;
+        color: inherit;
+        text-decoration: underline;
+      }
+      
+/*       img {
+        width: 100%;
+        max-height: 250px;
+        object-fit: cover;
+      } */
+      
+    </style>
+    
+  </head>
+  <body>
+    <main>
+      <h1 contentEditable>Hello world</h1>
+      <h2 contentEditable>link http</h2>
+    </main>
+    
+    <script>
+      // setTimeout(function() {
+      //   const firstTitle = document.querySelector("h1");
+      //   firstTitle.focus()
+      // },0)
+      
+      document.body.addEventListener("keydown", function(e) {        
+        if(e.key ==="p" && e.ctrlKey === true) { 
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const p = document.createElement("p")
+          p.textContent = textTarget
+          p.contentEditable = true
+          e.target.replaceWith(p)
+          p.focus()
+          setCursorToEnd(p)
+        } else if(e.key ==="o" && e.ctrlKey === true) {
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const h = document.createElement("h1");
+          h.textContent = textTarget
+          h.contentEditable = true
+          e.target.replaceWith(h)
+          h.focus()
+          setCursorToEnd(h)
+        } else if(e.key ==="h" && e.ctrlKey === true) {
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const h = document.createElement("h3");
+          h.textContent = textTarget
+          h.contentEditable = true
+          e.target.replaceWith(h)
+          h.focus()
+          setCursorToEnd(h)
+        } else if(e.key ==="s" && e.ctrlKey === true) {
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const h = document.createElement("summary");
+          h.textContent = textTarget
+          h.contentEditable = true
+          e.target.replaceWith(h)
+          h.focus()
+          setCursorToEnd(h)
+        } else if(e.key ==="d" && e.ctrlKey === true) {
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const h = document.createElement("h2");
+          h.textContent = textTarget
+          h.contentEditable = true
+          e.target.replaceWith(h)
+          h.focus()
+          setCursorToEnd(h)
+        } else if(e.key ==="q" && e.ctrlKey === true) {
+          e.preventDefault()
+          const textTarget = e.target.textContent
+          const h = document.createElement("blockquote");
+          h.textContent = textTarget
+          h.contentEditable = true
+          e.target.replaceWith(h)
+          h.focus()
+          setCursorToEnd(h)
+        } else if(e.key ==="3" && e.ctrlKey === true) {
+          e.preventDefault();
+          const url = prompt("Enter your link")
+          document.execCommand('createLink', true, url);
+          const selection = document.getSelection();
+          selection.anchorNode.parentElement.target = '_blank';
+        }
+        // else if(e.key ==="m" && e.ctrlKey === true) {
+        //   e.preventDefault();
+        //   const url = prompt("Enter your link")
+        //   document.execCommand('insertImage', true, url);
+        // }
+        else if(e.key ==="Backspace" && e.ctrlKey === true) {
+          e.preventDefault()
+          const previousElement = e.target.previousElementSibling
+          if(!previousElement) {
+            return
+          }
+          e.target.remove()
+          previousElement.focus();
+          setCursorToEnd(previousElement);
+        }
+        else if(e.key ==="Backspace" && e.target.textContent.length === 0) {
+          e.preventDefault()
+          const previousElement = e.target.previousElementSibling
+          if(!previousElement) {
+            return
+          }
+          e.target.remove()
+          previousElement.focus();
+          setCursorToEnd(previousElement);
+        }
+        else if(e.key === "Enter") {
+          e.preventDefault()
+          const p = document.createElement("p")
+          p.contentEditable = true
+          e.target.after(p)
+          p.focus()
+        } else if(e.key ==="ArrowUp" && e.ctrlKey === true) {
+          e.preventDefault()
+          const previousElement = e.target.previousElementSibling
+          if(!previousElement) {
+            return
+          }
+          previousElement.focus()
+          setCursorToEnd(previousElement);
+        } else if(e.key ==="ArrowDown" && e.ctrlKey === true) {
+          e.preventDefault()
+          const nextElement = e.target.nextElementSibling
+          if(!nextElement) {
+            return
+          }
+          nextElement.focus()
+          setCursorToEnd(nextElement);
+        }
+      })
+    
+    function setCursorToEnd(ele){
+      var range = document.createRange();
+      var sel = window.getSelection();
+      range.setStart(ele, 1);
+      range.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+      
+    </script>
+  </body>
+</html>
